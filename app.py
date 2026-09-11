@@ -53,7 +53,7 @@ PAGE = r'''<!doctype html>
   <header class="hero"><div class="hero-inner"><div><div class="eyebrow">On-site computer & IT support</div><h1>Tech help that comes to you.</h1><p>Reliable computer, Wi-Fi, printer, email, and smart-device support for homes and small businesses across New York City.</p><div class="actions"><a class="btn-primary" href="#book">Request an appointment</a><a class="btn-secondary" href="#services">View services</a></div></div><aside class="trust-card"><div class="trust-row"><span>🛡️</span><div><b>Trusted local support</b><small>Clear explanations and professional service.</small></div></div><div class="trust-row"><span>📍</span><div><b>On-site in NYC</b><small>Help at your home or small business.</small></div></div><div class="trust-row"><span>🗓️</span><div><b>Simple scheduling</b><small>Choose the service, date, and time you prefer.</small></div></div></aside></div></header>
   <main><section id="services"><div class="section-head"><h2>How can we help?</h2><p>Choose the service that best matches your needs. If you are unsure, describe the problem in the appointment form.</p></div><div class="services">{% for title, desc, icon in services %}<article class="service"><div class="icon">{{ icon }}</div><h3>{{ title }}</h3><p>{{ desc }}</p></article>{% endfor %}</div></section>
   <section class="booking" id="book"><div class="booking-copy"><h2>Request an appointment</h2><p>Tell us what you need and when you are available. We will contact you to confirm the appointment and estimated price.</p><div class="check"><i>✓</i><span>No payment required to request service</span></div><div class="check"><i>✓</i><span>Your information is used only for this request</span></div></div>
-  <form method="post" action="https://formsubmit.co/pcsolutionsnyc@outlook.com"><div class="grid"><div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required></div><div class="field"><label for="contact">Phone or email</label><input id="contact" name="contact" required></div><div class="field full"><label for="service">Service needed</label><select id="service" name="service" required><option value="">Choose a service</option>{% for title, desc, icon in services %}<option>{{ title }}</option>{% endfor %}<option>Other / Request a quote</option></select></div><div class="field"><label for="date">Preferred date</label><input id="date" name="date" type="date" min="{{ today }}" required></div><div class="field"><label for="time">Preferred time</label><select id="time" name="time" required><option value="">Choose a time</option><option>9:00 AM</option><option>10:00 AM</option><option>12:00 PM</option><option>2:00 PM</option><option>4:00 PM</option><option>6:00 PM</option></select></div><div class="field full"><label for="area">NYC borough or neighborhood</label><input id="area" name="area" placeholder="Example: Washington Heights, Manhattan" required></div><div class="field full"><label for="issue">Describe the problem</label><textarea id="issue" name="issue" placeholder="Tell us what is happening and which device needs help." required></textarea></div><div class="field full"><button type="submit">Send appointment request</button><p class="note">This first version confirms the request on screen. Direct email notifications and online payments will be added in a later version.</p></div></div></form></section></main>
+  <form method="post" action="https://formsubmit.co/pcsolutionsnyc@outlook.com"><input type="hidden" name="_next" value="https://pcsolutionsnyc.com/thanks"><div class="grid"><div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required></div><div class="field"><label for="contact">Phone or email</label><input id="contact" name="contact" required></div><div class="field full"><label for="service">Service needed</label><select id="service" name="service" required><option value="">Choose a service</option>{% for title, desc, icon in services %}<option>{{ title }}</option>{% endfor %}<option>Other / Request a quote</option></select></div><div class="field"><label for="date">Preferred date</label><input id="date" name="date" type="date" min="{{ today }}" required></div><div class="field"><label for="time">Preferred time</label><select id="time" name="time" required><option value="">Choose a time</option><option>9:00 AM</option><option>10:00 AM</option><option>12:00 PM</option><option>2:00 PM</option><option>4:00 PM</option><option>6:00 PM</option></select></div><div class="field full"><label for="area">NYC borough or neighborhood</label><input id="area" name="area" placeholder="Example: Washington Heights, Manhattan" required></div><div class="field full"><label for="issue">Describe the problem</label><textarea id="issue" name="issue" placeholder="Tell us what is happening and which device needs help." required></textarea></div><div class="field full"><button type="submit">Send appointment request</button><p class="note">This first version confirms the request on screen. Direct email notifications and online payments will be added in a later version.</p></div></div></form></section></main>
   <footer>© {{ year }} PC Solutions NYC · Professional on-site computer and IT support</footer>
 {% endif %}
 </body></html>'''
@@ -75,6 +75,31 @@ def book():
     }
     return render_template_string(PAGE, confirmation=confirmation, year=date.today().year)
 
-
+@app.get("/thanks")
+def thanks():
+    return '''<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request Received | PC Solutions NYC</title>
+<style>
+body{margin:0;background:#f6f9fd;color:#15233b;font-family:Arial,sans-serif}
+.card{max-width:600px;margin:70px auto;padding:40px 24px;text-align:center}
+.box{background:white;border:1px solid #dbe5f2;border-radius:22px;padding:42px 25px;box-shadow:0 16px 40px rgba(22,52,91,.1)}
+.mark{width:70px;height:70px;margin:auto;border-radius:50%;display:grid;place-items:center;background:#e7f8f1;color:#11845b;font-size:36px}
+h1{font-size:38px;margin:22px 0 12px}
+p{font-size:19px;line-height:1.6}
+a{display:inline-block;margin-top:20px;padding:14px 22px;border-radius:10px;background:#0d5bd7;color:white;text-decoration:none;font-weight:bold}
+</style>
+</head>
+<body>
+<main class="card"><section class="box">
+<div class="mark">✓</div>
+<h1>Request received</h1>
+<p>Thank you. PC Solutions NYC received your request and will contact you to confirm availability.</p>
+<a href="/">Return to home</a>
+</section></main>
+</body>
+</html>'''
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
