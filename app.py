@@ -1,5 +1,5 @@
 from datetime import date
-from flask import Flask, render_template_string, request
+from flask import Flask, render_template_string, request, send_from_directory
 
 app = Flask(__name__)
 
@@ -16,6 +16,7 @@ PAGE = r'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PC Solutions NYC | On-Site Computer & IT Support</title>
   <meta name="description" content="Book reliable on-site computer and IT support in New York City.">
@@ -101,5 +102,8 @@ a{display:inline-block;margin-top:20px;padding:14px 22px;border-radius:10px;back
 </section></main>
 </body>
 </html>'''
+@app.get("/favicon.png")
+def favicon():
+    return send_from_directory(app.root_path, "favicon.png", mimetype="image/png")
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
