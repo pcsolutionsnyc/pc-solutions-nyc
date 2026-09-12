@@ -17,6 +17,7 @@ PAGE = r'''<!doctype html>
 <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="google-site-verification" content="y6UFo1oixAsqpTbzic2xnBCr2i_EZIAabOi8lxk2ujQ" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PC Solutions NYC | On-Site Computer & IT Support</title>
   <meta name="description" content="Book reliable on-site computer and IT support in New York City.">
